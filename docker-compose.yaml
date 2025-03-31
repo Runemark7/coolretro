@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  go-app:
+    build: .
+    networks:
+      - app-network
+    environment:
+      - SQLITE_HOST=sqlite3-service
+    volumes:
+      - sqlite-data:/app/data
+    depends_on:
+      - sqlite3-service
+
+  sqlite3-service:
+    image: alpine:latest
+    networks:
+      - app-network
+    volumes:
+      - sqlite-data:/db
+    command: ["sh", "-c", "while true; do sleep 30; done"] # Keeps the container running
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  sqlite-data:
