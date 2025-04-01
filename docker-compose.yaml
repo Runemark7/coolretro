@@ -11,6 +11,8 @@ services:
       - sqlite-data:/app/data
     depends_on:
       - sqlite3-service
+    ports:
+      - "8080:8080"
 
   sqlite3-service:
     image: alpine:latest
